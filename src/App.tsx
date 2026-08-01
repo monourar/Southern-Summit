@@ -1,0 +1,66 @@
+import React, { useState } from 'react';
+import { Header } from './components/layout/Header';
+import { Footer } from './components/layout/Footer';
+import { WebGLHero } from './components/hero/WebGLHero';
+import { Positioning } from './components/sections/Positioning';
+import { ProcessTimeline } from './components/sections/ProcessTimeline';
+import { Testimonials } from './components/sections/Testimonials';
+import { MasterPlanEstimator } from './components/sections/MasterPlanEstimator';
+import { PortfolioGrid } from './components/sections/PortfolioGrid';
+import { BuilderPartnership } from './components/sections/BuilderPartnership';
+import { FAQSection } from './components/sections/FAQSection';
+import { ConsultationModal } from './components/modals/ConsultationModal';
+import { CustomCursor } from './components/common/CustomCursor';
+
+export function App() {
+  const [consultationOpen, setConsultationOpen] = useState(false);
+
+  const handleOpenConsultation = () => {
+    setConsultationOpen(true);
+  };
+
+  const handleCloseConsultation = () => {
+    setConsultationOpen(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-[#1C1A17] text-[#F5F1EA] selection:bg-[#B5652E] selection:text-[#F5F1EA] relative">
+      {/* Part 3: Global Architectural Grain/Noise Overlay */}
+      <svg className="grain-overlay" xmlns="http://www.w3.org/2000/svg">
+        <filter id="noiseFilter">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+      </svg>
+
+      {/* Hardware-Accelerated Lerp Cursor Ring */}
+      <CustomCursor />
+
+      {/* Architectural Fixed Header */}
+      <Header onOpenConsultation={handleOpenConsultation} />
+
+      {/* Core WebGL Centerpiece Hero & Section Navigation */}
+      <main>
+        <WebGLHero onOpenConsultation={handleOpenConsultation} />
+        <Positioning />
+        <ProcessTimeline onOpenConsultation={handleOpenConsultation} />
+        <Testimonials />
+        <MasterPlanEstimator onOpenConsultation={handleOpenConsultation} />
+        <PortfolioGrid onOpenConsultation={handleOpenConsultation} />
+        <BuilderPartnership onOpenConsultation={handleOpenConsultation} />
+        <FAQSection />
+      </main>
+
+      {/* Architectural Footer */}
+      <Footer />
+
+      {/* Proposal Consultation Request Modal */}
+      <ConsultationModal
+        isOpen={consultationOpen}
+        onClose={handleCloseConsultation}
+      />
+    </div>
+  );
+}
+
+export default App;

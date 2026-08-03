@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Reveal } from '../common/Reveal';
 
 interface ProcessTimelineProps {
   onOpenConsultation: () => void;
@@ -47,19 +47,19 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onOpenConsulta
           <div className="absolute top-12 left-12 right-12 h-[1px] bg-[#B5652E]/30 z-0" />
           <div className="grid grid-cols-4 gap-6 relative z-10">
             {steps.map((step, idx) => (
-              <motion.div
+              <Reveal
                 key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.6, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                delay={idx * 0.12}
+                duration={0.6}
+                y={30}
+                margin="-50px"
                 className="bg-[#24211D] p-7 rounded-xl border border-[#F5F1EA]/10 hover:border-[#B5652E] transition-all duration-500 hover:-translate-y-2 group flex flex-col justify-between"
               >
                 <div>
                   <span className="font-serif text-6xl text-[#B5652E] font-normal leading-none tracking-tight block mb-4">
                     {step.num}
                   </span>
-                  <h3 className="font-serif text-2xl text-[#F5F1EA] mb-3 group-hover:text-[#B5652E] transition-colors">
+                  <h3 className="font-serif text-2xl text-[#F5F1EA] mb-3 group-hover:text-[#D8A370] transition-colors">
                     {step.title}
                   </h3>
                   <p className="text-sm text-[#A39E93] leading-relaxed">{step.desc}</p>
@@ -67,7 +67,7 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onOpenConsulta
                 <div className="mt-6 pt-4 border-t border-[#F5F1EA]/10 text-[10px] uppercase tracking-[0.2em] text-[#A39E93] font-semibold">
                   Stage {step.num} — Specification
                 </div>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -76,18 +76,19 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onOpenConsulta
             Fix 6: Numeral stays large (text-5xl ≈ 48px) as a strong visual anchor,
             even as card text scales down. gap-10 between cards for distinct steps. */}
         <div className="lg:hidden relative ml-8 sm:ml-10 pl-10 sm:pl-12 border-l-2 border-[#B5652E]/40 space-y-12 mb-12">
-          <motion.div className="absolute left-2 top-0 w-0.5 bg-[#B5652E]/40 origin-top" style={{ height: '100%' }} initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} transition={{ duration: 0.8, ease: [0.16,1,0.3,1] }} />
+          <Reveal mode="scaleY" duration={0.8} className="absolute left-2 top-0 w-0.5 bg-[#B5652E]/40 origin-top" margin="-50px" />
             {steps.map((step, idx) => (
-            <motion.div
+            <Reveal
               key={idx}
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              delay={idx * 0.08}
+              duration={0.5}
+              y={0}
+              x={-16}
+              margin="-40px"
               className="relative bg-[#24211D] p-6 sm:p-8 rounded-2xl border border-[#F5F1EA]/10 flex flex-col justify-between min-h-[260px]"
             >
               {/* Timeline Node */}
-              <motion.div className="absolute -left-4 top-6 w-3 h-3 rounded-full bg-[#B5652E]" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.3, delay: idx * 0.08 }} />
+              <Reveal mode="fade" duration={0.3} delay={idx * 0.08} className="absolute -left-4 top-6 w-3 h-3 rounded-full bg-[#B5652E]" />
 
               {/* Fix 6: Oversized numeral as visual anchor */}
               <span className="font-serif text-5xl text-[#B5652E]/10 font-normal leading-none tracking-tight block mb-1 pointer-events-none select-none">
@@ -100,7 +101,7 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onOpenConsulta
                 <p className="text-[13px] sm:text-sm text-[#A39E93] leading-7">
                   {step.desc}
                 </p>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
 

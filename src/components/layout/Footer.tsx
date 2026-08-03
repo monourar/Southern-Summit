@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
                 <span className="font-serif text-xl tracking-wider text-[#F5F1EA] font-medium uppercase">
                   Southern Summit
                 </span>
-                <span className="text-[10px] tracking-[0.25em] text-[#B5652E] uppercase font-semibold">
+                <span className="text-[10px] tracking-[0.25em] text-[#D8A370] uppercase font-semibold">
                   Outdoor Design Studio
                 </span>
               </div>
@@ -71,9 +71,9 @@ export const Footer: React.FC = () => {
 
           {/* Navigation Col */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs uppercase tracking-widest text-[#B5652E] font-semibold mb-4">
+            <h2 className="text-xs uppercase tracking-widest text-[#D8A370] font-semibold mb-4">
               Navigation
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm text-[#A39E93]">
               <li><a href="#hero-3d" onClick={(e) => handleNavClick(e, 'hero-3d')} className="hover:text-[#F5F1EA] transition-colors focus-visible:ring-2 focus-visible:ring-[#B5652E] rounded">3D Spatial Lens</a></li>
               <li><a href="#positioning" onClick={(e) => handleNavClick(e, 'positioning')} className="hover:text-[#F5F1EA] transition-colors focus-visible:ring-2 focus-visible:ring-[#B5652E] rounded">Proof &amp; Transformation</a></li>
@@ -85,9 +85,9 @@ export const Footer: React.FC = () => {
 
           {/* Partnerships Col */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs uppercase tracking-widest text-[#B5652E] font-semibold mb-4">
+            <h2 className="text-xs uppercase tracking-widest text-[#D8A370] font-semibold mb-4">
               Partnerships
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm text-[#A39E93]">
               <li><a href="#builders" onClick={(e) => handleNavClick(e, 'builders')} className="hover:text-[#F5F1EA] transition-colors focus-visible:ring-2 focus-visible:ring-[#B5652E] rounded">Custom Home Builders</a></li>
               <li><a href="#builders" onClick={(e) => handleNavClick(e, 'builders')} className="hover:text-[#F5F1EA] transition-colors focus-visible:ring-2 focus-visible:ring-[#B5652E] rounded">Luxury Pool Contractors</a></li>
@@ -98,9 +98,9 @@ export const Footer: React.FC = () => {
 
           {/* Authentic Clickable Studio Contact Col */}
           <div className="lg:col-span-4">
-            <h4 className="text-xs uppercase tracking-widest text-[#B5652E] font-semibold mb-4">
+            <h2 className="text-xs uppercase tracking-widest text-[#D8A370] font-semibold mb-4">
               Studio Contact
-            </h4>
+            </h2>
             <div className="space-y-3.5 text-sm text-[#A39E93]">
               <a
                 href="mailto:southernsummitoutdoor@gmail.com"

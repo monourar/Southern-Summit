@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { WebGLHero } from './components/hero/WebGLHero';
 import { Positioning } from './components/sections/Positioning';
 import { ProcessTimeline } from './components/sections/ProcessTimeline';
 import { Testimonials } from './components/sections/Testimonials';
-import { MasterPlanEstimator } from './components/sections/MasterPlanEstimator';
 import { PortfolioGrid } from './components/sections/PortfolioGrid';
 import { BuilderPartnership } from './components/sections/BuilderPartnership';
 import { FAQSection } from './components/sections/FAQSection';
-import { ConsultationModal } from './components/modals/ConsultationModal';
 import { CustomCursor } from './components/common/CustomCursor';
+
+// Fix 4 (unused JS): below-the-fold, interactivity-gated components are code-split
+// so their JS only downloads when the user actually opens them. The estimator sits
+// mid-page and the modal renders null when closed, so neither needs to be in the
+// initial bundle.
+const MasterPlanEstimator = lazy(() =>
+  import('./components/sections/MasterPlanEstimator').then((m) => ({ default: m.MasterPlanEstimator }))
+);
+const ConsultationModal = lazy(() =>
+  import('./components/modals/ConsultationModal').then((m) => ({ default: m.ConsultationModal }))
+);
 
 export function App() {
   const [consultationOpen, setConsultationOpen] = useState(false);
@@ -45,7 +54,9 @@ export function App() {
         <Positioning />
         <ProcessTimeline onOpenConsultation={handleOpenConsultation} />
         <Testimonials />
-        <MasterPlanEstimator onOpenConsultation={handleOpenConsultation} />
+        <Suspense fallback={null}>
+          <MasterPlanEstimator onOpenConsultation={handleOpenConsultation} />
+        </Suspense>
         <PortfolioGrid onOpenConsultation={handleOpenConsultation} />
         <BuilderPartnership onOpenConsultation={handleOpenConsultation} />
         <FAQSection />
@@ -55,10 +66,12 @@ export function App() {
       <Footer />
 
       {/* Proposal Consultation Request Modal */}
-      <ConsultationModal
-        isOpen={consultationOpen}
-        onClose={handleCloseConsultation}
-      />
+      <Suspense fallback={null}>
+        <ConsultationModal
+          isOpen={consultationOpen}
+          onClose={handleCloseConsultation}
+        />
+      </Suspense>
     </div>
   );
 }

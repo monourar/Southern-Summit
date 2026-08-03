@@ -1,6 +1,6 @@
 import React from 'react';
 import { Quote } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Reveal } from '../common/Reveal';
 
 export const Testimonials: React.FC = () => {
   const testimonials = [
@@ -29,12 +29,12 @@ export const Testimonials: React.FC = () => {
             serif text at text-xl (20px) — staying above body-copy size */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16">
           {testimonials.map((item, idx) => (
-            <motion.div
+            <Reveal
               key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: idx * 0.2, ease: [0.16, 1, 0.3, 1] }}
+              delay={idx * 0.2}
+              duration={0.6}
+              y={30}
+              margin="-50px"
               className="flex flex-col justify-between border-l-2 border-[#B5652E] pl-6 sm:pl-8 py-2"
             >
               <div>
@@ -52,7 +52,7 @@ export const Testimonials: React.FC = () => {
                   {item.location}
                 </span>
               </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

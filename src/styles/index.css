@@ -2,6 +2,82 @@
    Southern Summit Outdoor — Architectural Luxury Design System
    ========================================================================== */
 
+/* ---- Self-hosted web fonts (Cormorant Garamond + Plus Jakarta Sans) ----
+   Served same-origin from /fonts to eliminate the render-blocking Google
+   Fonts CSS chain. font-display: swap keeps text visible in fallback while
+   the woff2 files load. */
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond-italic-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/plus-jakarta-sans-300.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/plus-jakarta-sans-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/plus-jakarta-sans-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/plus-jakarta-sans-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/plus-jakarta-sans-700.woff2') format('woff2');
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,6 +93,13 @@
     --accent-bronze: #B5652E;
     --accent-bronze-glow: rgba(181, 101, 46, 0.25);
     --accent-bronze-hover: #D87838;
+    /* WCAG AA-compliant bronze variants (Fix 5):
+       --accent-bronze-light  = accessible bronze text on dark surfaces (≥4.5:1)
+       --accent-bronze-solid  = accessible bronze fill behind light text (4.68:1)
+       --accent-bronze-solid-hover = accessible hover fill (5.73:1) */
+    --accent-bronze-light: #D8A370;
+    --accent-bronze-solid: #A05A28;
+    --accent-bronze-solid-hover: #8F4D22;
     
     --accent-blueprint: #38BDF8;
     --accent-blueprint-glow: rgba(56, 189, 248, 0.3);
@@ -240,7 +323,7 @@ p {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  background-color: var(--accent-bronze);
+  background-color: var(--accent-bronze-solid);
   color: var(--text-light);
   padding: 0.875rem 1.75rem;
   min-height: 48px;
@@ -249,7 +332,7 @@ p {
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  border: 1px solid var(--accent-bronze);
+  border: 1px solid var(--accent-bronze-solid);
   cursor: pointer;
   transition: all 0.4s var(--ease-out-expo);
   box-shadow: 0 4px 20px var(--accent-bronze-glow);
@@ -265,7 +348,8 @@ p {
 }
 
 .btn-primary:hover {
-  background-color: var(--accent-bronze-hover);
+  background-color: var(--accent-bronze-solid-hover);
+  border-color: var(--accent-bronze-solid-hover);
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(216, 120, 56, 0.4);
 }

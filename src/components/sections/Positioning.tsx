@@ -60,8 +60,12 @@ export const Positioning: React.FC = () => {
 
             <div className="-mx-[var(--page-gutter)] sm:mx-0" style={{ width: 'calc(100% + var(--page-gutter) * 2)' }}>
               <ImageComparisonSlider
-                beforeImage="/images/before_backyard.jpg"
-                afterImage="/images/after_backyard.jpg"
+                beforeImage="/images/before_backyard-1280.jpg"
+                afterImage="/images/after_backyard-1280.jpg"
+                beforeBase="before_backyard"
+                afterBase="after_backyard"
+                sizes="(min-width: 768px) 560px, 100vw"
+                beforeLoading="lazy"
                 beforeLabel="Before Renovation"
                 afterLabel="After 3D Master Plan"
                 heightClass="aspect-[4/5] sm:aspect-auto sm:h-[440px]"

@@ -68,7 +68,7 @@ export const WebGLHero: React.FC<WebGLHeroProps> = ({ onOpenConsultation }) => {
               onClick={() => setActiveTab('dissolve')}
               className={`min-h-[44px] px-3 sm:px-5 py-2 rounded-full text-[11px] uppercase tracking-widest font-medium transition-all duration-300 flex items-center justify-center gap-1.5 ${
                 activeTab === 'dissolve'
-                  ? 'bg-[#B5652E] text-[#F5F1EA] font-semibold shadow-md'
+                  ? 'bg-[#A05A28] text-[#F5F1EA] font-semibold shadow-md'
                   : 'text-[#A39E93] hover:text-[#F5F1EA]'
               }`}
             >
@@ -82,7 +82,7 @@ export const WebGLHero: React.FC<WebGLHeroProps> = ({ onOpenConsultation }) => {
               onClick={() => setActiveTab('photoreal')}
               className={`min-h-[44px] px-3 sm:px-5 py-2 rounded-full text-[11px] uppercase tracking-widest font-medium transition-all duration-300 flex items-center justify-center gap-1.5 ${
                 activeTab === 'photoreal'
-                  ? 'bg-[#B5652E] text-[#F5F1EA] font-semibold shadow-md'
+                  ? 'bg-[#A05A28] text-[#F5F1EA] font-semibold shadow-md'
                   : 'text-[#A39E93] hover:text-[#F5F1EA]'
               }`}
             >
@@ -99,8 +99,12 @@ export const WebGLHero: React.FC<WebGLHeroProps> = ({ onOpenConsultation }) => {
       <div className="container mx-auto relative z-10">
         {activeTab === 'dissolve' ? (
           <ImageComparisonSlider
-            beforeImage="/images/hero_cad_blueprint.jpg"
-            afterImage="/images/hero_backyard_night.jpg"
+            beforeImage="/images/hero_cad_blueprint-1376.jpg"
+            afterImage="/images/hero_backyard_night-1376.jpg"
+            beforeBase="hero_cad_blueprint"
+            afterBase="hero_backyard_night"
+            sizes="(min-width: 768px) 1200px, 100vw"
+            beforeFetchPriority="high"
             beforeLabel="CAD Blueprint Specification"
             afterLabel="Completed Estate Sanctuary"
             heightClass="aspect-[3/4] sm:aspect-auto sm:h-[460px] md:h-[620px] lg:h-[680px]"
@@ -110,15 +114,22 @@ export const WebGLHero: React.FC<WebGLHeroProps> = ({ onOpenConsultation }) => {
           />
         ) : (
           <div className="w-full aspect-[3/4] sm:aspect-auto sm:h-[460px] md:h-[620px] lg:h-[680px] rounded-xl overflow-hidden border border-[#F5F1EA]/15 shadow-2xl relative">
-            <img
-              src="/images/hero_backyard_night.jpg"
-              alt="Architectural Dusk Realization"
-              className="w-full h-full object-cover"
-            />
+            <picture>
+              <source srcSet="/images/hero_backyard_night-768.webp 768w, /images/hero_backyard_night-1376.webp 1376w" type="image/webp" sizes="(min-width: 768px) 1200px, 100vw" />
+              <source srcSet="/images/hero_backyard_night-1376.jpg" type="image/jpeg" sizes="(min-width: 768px) 1200px, 100vw" />
+              <img
+                src="/images/hero_backyard_night-1376.jpg"
+                alt="Architectural Dusk Realization"
+                width="1376"
+                height="768"
+                fetchPriority="high"
+                className="w-full h-full object-cover"
+              />
+            </picture>
             {/* Caption only on sm+ */}
             <div className="hidden sm:block absolute bottom-6 left-6 z-20 bg-[#1C1A17]/85 backdrop-blur-md p-5 rounded-lg border border-[#F5F1EA]/10 max-w-md">
-              <span className="text-xs uppercase tracking-widest text-[#B5652E] font-semibold block mb-1">Architectural Dusk Realization</span>
-              <h3 className="font-serif text-3xl text-[#F5F1EA]">The Highland Estate Sanctuary</h3>
+              <span className="text-xs uppercase tracking-widest text-[#D8A370] font-semibold block mb-1">Architectural Dusk Realization</span>
+              <h2 className="font-serif text-3xl text-[#F5F1EA]">The Highland Estate Sanctuary</h2>
             </div>
           </div>
         )}

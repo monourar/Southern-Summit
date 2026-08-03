@@ -109,7 +109,7 @@ export const MasterPlanEstimator: React.FC<MasterPlanEstimatorProps> = ({ onOpen
                 <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-[#A39E93] font-semibold block mb-2">
                   Estimated 3D Design Package
                 </span>
-                <div className="font-serif text-4xl sm:text-5xl text-[#B5652E] font-semibold mb-2">
+                <div className="font-serif text-4xl sm:text-5xl text-[#D8A370] font-semibold mb-2">
                   ${baseDesignFee.toLocaleString()}
                 </div>
                 <p className="text-[11px] sm:text-xs text-[#A39E93] mb-5 leading-relaxed">

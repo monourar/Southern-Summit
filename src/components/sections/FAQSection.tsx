@@ -44,7 +44,7 @@ export const FAQSection: React.FC = () => {
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${idx}`}
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="w-full py-5 sm:py-7 text-left flex justify-between items-center gap-4 sm:gap-6 font-serif text-[1.125rem] sm:text-2xl text-[#1C1A17] hover:text-[#B5652E] transition-colors focus-visible:ring-2 focus-visible:ring-[#B5652E] focus-visible:outline-none min-h-[52px]"
+                  className="w-full py-5 sm:py-7 text-left flex justify-between items-center gap-4 sm:gap-6 font-serif text-[1.125rem] sm:text-2xl text-[#1C1A17] hover:text-[#8F4D22] transition-colors focus-visible:ring-2 focus-visible:ring-[#B5652E] focus-visible:outline-none min-h-[52px]"
                 >
                   <span className="leading-snug pr-2">{faq.q}</span>
                   <div className={`w-9 h-9 sm:w-8 sm:h-8 rounded-full border border-[#1C1A17]/20 flex items-center justify-center text-[#1C1A17] flex-shrink-0 transition-all duration-300 ${

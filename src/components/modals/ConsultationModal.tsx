@@ -96,7 +96,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
               </div>
               <div className="flex justify-between">
                 <span>Target Build Budget:</span>
-                <span className="text-[#B5652E] font-semibold">{formData.budget}</span>
+                <span className="text-[#D8A370] font-semibold">{formData.budget}</span>
               </div>
             </div>
 
@@ -130,7 +130,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="input-name" className="block text-xs uppercase tracking-wider text-[#A39E93] mb-1 font-medium">
-                  Full Name <span className="text-[#B5652E]">*</span>
+                  Full Name <span className="text-[#D8A370]">*</span>
                 </label>
                 <input
                   id="input-name"
@@ -146,7 +146,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="input-email" className="block text-xs uppercase tracking-wider text-[#A39E93] mb-1 font-medium">
-                    Email Address <span className="text-[#B5652E]">*</span>
+                    Email Address <span className="text-[#D8A370]">*</span>
                   </label>
                   <input
                     id="input-email"

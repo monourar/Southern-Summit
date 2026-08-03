@@ -11,6 +11,16 @@ interface ImageComparisonSliderProps {
   ariaLabel?: string;
   /** Hide corner text labels on mobile (<640px) — keeps drag handle visible */
   hideLabelsOnMobile?: boolean;
+  /** Optional base names of the optimized image variants in /images (e.g. "hero_cad_blueprint").
+      When provided, the slider renders <picture> with WebP srcset + resized JPEG fallback
+      instead of a single full-resolution image (Fix 1). */
+  beforeBase?: string;
+  afterBase?: string;
+  /** Sizes hint passed to the <img>/<source> elements (Fix 2) */
+  sizes?: string;
+  /** LCP image hint — passed through to the before/after <img> (Fix 2) */
+  beforeFetchPriority?: 'high' | 'low' | 'auto';
+  beforeLoading?: 'eager' | 'lazy';
 }
 
 export const ImageComparisonSlider: React.FC<ImageComparisonSliderProps> = ({
@@ -21,7 +31,12 @@ export const ImageComparisonSlider: React.FC<ImageComparisonSliderProps> = ({
   heightClass = 'h-[480px]',
   accentColor = '#B5652E',
   ariaLabel = 'Before and after image comparison slider',
-  hideLabelsOnMobile = false
+  hideLabelsOnMobile = false,
+  beforeBase,
+  afterBase,
+  sizes = '(min-width: 768px) 1200px, 100vw',
+  beforeFetchPriority = 'auto',
+  beforeLoading = 'eager',
 }) => {
   const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -79,6 +94,21 @@ export const ImageComparisonSlider: React.FC<ImageComparisonSliderProps> = ({
   // Label visibility class — hidden on mobile when hideLabelsOnMobile is set
   const labelHideClass = hideLabelsOnMobile ? 'hidden sm:block' : '';
 
+  // WCAG AA badge colors (Fix 5): the cyan accent keeps its cyan fill but gets
+  // near-black text (#1C1A17 on #38BDF8 = 8.10:1); the bronze accent gets the
+  // accessible fill #A05A28 with light text (4.68:1) instead of #B5652E (3.83:1).
+  const cyanAccent = accentColor === '#38BDF8';
+  const badgeBg = cyanAccent ? '#38BDF8' : '#A05A28';
+  const badgeText = cyanAccent ? '#1C1A17' : '#F5F1EA';
+
+  const srcSet = (base: string, widths: number[]) =>
+    widths.map((w) => `/images/${base}-${w}.webp ${w}w`).join(', ');
+  const fallback = (base: string, width: number) => `/images/${base}-${width}.jpg`;
+  const beforeWidths = beforeBase ? (beforeBase === 'before_backyard' ? [768, 1280] : [768, 1376]) : [];
+  const afterWidths = afterBase ? (afterBase === 'after_backyard' ? [768, 1280] : [768, 1376]) : [];
+  const beforeIntrinsic = beforeBase === 'before_backyard' ? { width: 1280, height: 714 } : { width: 1376, height: 768 };
+  const afterIntrinsic = afterBase === 'after_backyard' ? { width: 1280, height: 714 } : { width: 1376, height: 768 };
+
   return (
     <div
       ref={containerRef}
@@ -102,11 +132,29 @@ export const ImageComparisonSlider: React.FC<ImageComparisonSliderProps> = ({
           clipPath: `polygon(${sliderPos}% 0, 100% 0, 100% 100%, ${sliderPos}% 100%)`
         }}
       >
-        <img
-          src={beforeImage}
-          alt={beforeLabel}
-          className="w-full h-full object-cover pointer-events-none"
-        />
+        {beforeBase ? (
+          <picture>
+            <source srcSet={srcSet(beforeBase, beforeWidths)} type="image/webp" sizes={sizes} />
+            <source srcSet={fallback(beforeBase, beforeIntrinsic.width)} type="image/jpeg" sizes={sizes} />
+            <img
+              src={fallback(beforeBase, beforeIntrinsic.width)}
+              alt={beforeLabel}
+              width={beforeIntrinsic.width}
+              height={beforeIntrinsic.height}
+              fetchPriority={beforeFetchPriority}
+              loading={beforeLoading}
+              className="w-full h-full object-cover pointer-events-none"
+            />
+          </picture>
+        ) : (
+          <img
+            src={beforeImage}
+            alt={beforeLabel}
+            fetchPriority={beforeFetchPriority}
+            loading={beforeLoading}
+            className="w-full h-full object-cover pointer-events-none"
+          />
+        )}
         {beforeLabel && showRightLabel && (
           <span className={`absolute top-4 right-4 z-20 bg-[#1C1A17]/90 backdrop-blur-md px-3.5 py-1.5 rounded text-[10px] uppercase tracking-widest text-[#F5F1EA] font-semibold border border-[#F5F1EA]/10 pointer-events-none transition-opacity duration-200 ${labelHideClass}`}>
             {beforeLabel}
@@ -121,15 +169,29 @@ export const ImageComparisonSlider: React.FC<ImageComparisonSliderProps> = ({
           clipPath: `polygon(0 0, ${sliderPos}% 0, ${sliderPos}% 100%, 0 100%)`
         }}
       >
-        <img
-          src={afterImage}
-          alt={afterLabel}
-          className="w-full h-full object-cover pointer-events-none"
-        />
+        {afterBase ? (
+          <picture>
+            <source srcSet={srcSet(afterBase, afterWidths)} type="image/webp" sizes={sizes} />
+            <source srcSet={fallback(afterBase, afterIntrinsic.width)} type="image/jpeg" sizes={sizes} />
+            <img
+              src={fallback(afterBase, afterIntrinsic.width)}
+              alt={afterLabel}
+              width={afterIntrinsic.width}
+              height={afterIntrinsic.height}
+              className="w-full h-full object-cover pointer-events-none"
+            />
+          </picture>
+        ) : (
+          <img
+            src={afterImage}
+            alt={afterLabel}
+            className="w-full h-full object-cover pointer-events-none"
+          />
+        )}
         {afterLabel && showLeftLabel && (
           <span
-            className={`absolute top-4 left-4 z-20 backdrop-blur-md px-3.5 py-1.5 rounded text-[10px] uppercase tracking-widest text-[#F5F1EA] font-semibold shadow-lg pointer-events-none transition-opacity duration-200 ${labelHideClass}`}
-            style={{ backgroundColor: accentColor }}
+            className={`absolute top-4 left-4 z-20 backdrop-blur-md px-3.5 py-1.5 rounded text-[10px] uppercase tracking-widest font-semibold shadow-lg pointer-events-none transition-opacity duration-200 ${labelHideClass}`}
+            style={{ backgroundColor: badgeBg, color: badgeText }}
           >
             {afterLabel}
           </span>

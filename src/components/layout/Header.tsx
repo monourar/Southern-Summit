@@ -10,7 +10,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenConsultation }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
-  // Measure dynamic header height and update CSS custom property --header-height
+  // Measure dynamic header height and update CSS custom property --header-height.
+  // Fix 8 (forced reflow): the header height is tracked ONLY via ResizeObserver
+  // (padding changes when the scroll state flips also resize the header, so the
+  // observer catches them). No getBoundingClientRect() is read from the scroll
+  // handler, and the effect subscribes exactly once ([] deps) instead of
+  // re-subscribing on every isScrolled flip.
   useEffect(() => {
     const updateHeaderHeight = () => {
       if (headerRef.current) {
@@ -31,7 +36,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenConsultation }) => {
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 30);
-      updateHeaderHeight();
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -42,7 +46,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenConsultation }) => {
       window.removeEventListener('resize', updateHeaderHeight);
       resizeObserver.disconnect();
     };
-  }, [isScrolled]);
+  }, []);
 
   // Handle Hash Navigation on Initial Page Load
   useEffect(() => {
@@ -97,7 +101,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenConsultation }) => {
             <span className="font-serif text-xl tracking-wider text-[#F5F1EA] font-medium uppercase">
               Southern Summit
             </span>
-            <span className="text-[10px] tracking-[0.25em] text-[#B5652E] uppercase font-semibold">
+            <span className="text-[10px] tracking-[0.25em] text-[#D8A370] uppercase font-semibold">
               Outdoor Design Studio
             </span>
           </div>

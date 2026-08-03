@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MapPin, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Reveal } from '../common/Reveal';
 
 interface PortfolioGridProps {
   onOpenConsultation?: () => void;
@@ -13,34 +13,41 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ onOpenConsultation
   const projects = [
     {
       id: 1,
+      base: 'portfolio_1_highland',
       category: 'pools',
       title: 'The Highland Sanctuary',
       tag: 'Custom Heated Pool & Spa',
-      image: '/images/portfolio_1_highland.jpg',
+      image: '/images/portfolio_1_highland-1024.jpg',
       location: 'Nashville, TN',
       spec: '6,500 sq ft Estate Ground'
     },
     {
       id: 2,
+      base: 'portfolio_2_culinary',
       category: 'kitchens',
       title: 'The Culinary Pavilion',
       tag: 'Outdoor Kitchen & Dining Bar',
-      image: '/images/portfolio_2_culinary.jpg',
+      image: '/images/portfolio_2_culinary-1024.jpg',
       location: 'Atlanta, GA',
       spec: 'Thermally Modified Timber'
     },
     {
       id: 3,
+      base: 'after_backyard',
       category: 'master',
       title: 'Oakridge Estate Master Plan',
       tag: 'Full 1.5 Acre Multi-Zone Plan',
-      image: '/images/after_backyard.jpg',
+      image: '/images/after_backyard-1280.jpg',
       location: 'Charlotte, NC',
       spec: '1.5 Acre Master CAD'
     }
   ];
 
   const filteredProjects = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+
+  const imageSrcSet = (name: string) =>
+    `/images/${name}-640.webp 640w, /images/${name}-1024.webp 1024w`;
+  const imageSizes = '(min-width: 768px) 425px, 88vw';
 
   return (
     <section id="portfolio" className="snap-section-auto bg-[#F5F1EA] text-[#1C1A17] border-t border-[#1C1A17]/10">
@@ -78,51 +85,55 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ onOpenConsultation
         {/* Desktop View: Grid Layout */}
         <div className="hidden md:grid md:grid-cols-3 gap-8">
           {filteredProjects.map((p, idx) => (
-            <motion.div
+            <Reveal
               key={p.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.6, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              delay={idx * 0.15}
+              duration={0.6}
+              y={30}
+              margin="-40px"
               onClick={onOpenConsultation}
               tabIndex={0}
               role="button"
               aria-label={`View ${p.title} architectural specification`}
               className="group relative h-[450px] rounded-xl overflow-hidden border border-[#1C1A17]/15 shadow-xl cursor-pointer focus-visible:ring-2 focus-visible:ring-[#B5652E] focus-visible:outline-none transition-all duration-500 hover:shadow-2xl hover:border-[#B5652E]/50"
             >
-              <img
-                src={p.image}
-                alt={p.title}
-                loading="lazy"
-                width="600"
-                height="450"
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-              />
+              <picture>
+                <source srcSet={imageSrcSet(p.base)} type="image/webp" sizes={imageSizes} />
+                <source srcSet={`/images/${p.base}-1024.jpg`} type="image/jpeg" sizes={imageSizes} />
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  loading="lazy"
+                  width="1024"
+                  height="576"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                />
+              </picture>
 
               <div className="absolute top-4 left-4 right-4 z-20 flex justify-between items-center pointer-events-none">
                 <span className="bg-[#1C1A17]/85 backdrop-blur-md px-3 py-1 rounded text-[10px] uppercase tracking-widest text-[#F5F1EA] font-semibold border border-[#F5F1EA]/10">
                   {p.tag}
                 </span>
                 <span className="bg-[#1C1A17]/85 backdrop-blur-md px-3 py-1 rounded text-[10px] uppercase tracking-widest text-[#A39E93] font-semibold border border-[#F5F1EA]/10 flex items-center gap-1">
-                  <MapPin className="w-3 h-3 text-[#B5652E]" /> {p.location}
+                  <MapPin className="w-3 h-3 text-[#D8A370]" /> {p.location}
                 </span>
               </div>
 
               <div className="absolute inset-0 bg-gradient-to-t from-[#1C1A17] via-[#1C1A17]/40 to-transparent p-8 flex flex-col justify-end transition-all duration-500">
                 <div className="transform group-hover:-translate-y-2 transition-transform duration-300">
-                  <span className="text-[11px] font-semibold uppercase tracking-widest text-[#B5652E] mb-1 block">
+                  <span className="text-[11px] font-semibold uppercase tracking-widest text-[#D8A370] mb-1 block">
                     {p.spec}
                   </span>
                   <h3 className="font-serif text-3xl text-[#F5F1EA] mb-3 leading-tight">
                     {p.title}
                   </h3>
-                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#F5F1EA] group-hover:text-[#B5652E] transition-colors pt-2 border-t border-[#F5F1EA]/15">
+                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#F5F1EA] group-hover:text-[#D8A370] transition-colors pt-2 border-t border-[#F5F1EA]/15">
                     <span>Explore 3D Specification</span>
-                    <ArrowUpRight className="w-4 h-4 text-[#B5652E] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    <ArrowUpRight className="w-4 h-4 text-[#D8A370] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
 
@@ -144,12 +155,18 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ onOpenConsultation
                 onClick={onOpenConsultation}
                 className="w-[88vw] flex-shrink-0 snap-center relative aspect-[3/4] rounded-xl overflow-hidden border border-[#1C1A17]/15 shadow-xl cursor-pointer"
               >
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
+                <picture>
+                  <source srcSet={imageSrcSet(p.base)} type="image/webp" sizes={imageSizes} />
+                  <source srcSet={`/images/${p.base}-1024.jpg`} type="image/jpeg" sizes={imageSizes} />
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    loading="lazy"
+                    width="1024"
+                    height="576"
+                    className="w-full h-full object-cover"
+                  />
+                </picture>
 
                 {/* Simplified top bar on mobile — just category tag */}
                 <div className="absolute top-3 left-3 right-3 z-20 flex justify-between items-center pointer-events-none">
@@ -157,12 +174,12 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ onOpenConsultation
                     {p.tag}
                   </span>
                   <span className="bg-[#1C1A17]/85 backdrop-blur-md px-2.5 py-1 rounded text-[10px] uppercase tracking-widest text-[#A39E93] font-semibold border border-[#F5F1EA]/10 flex items-center gap-1">
-                    <MapPin className="w-3 h-3 text-[#B5652E]" /> {p.location}
+                    <MapPin className="w-3 h-3 text-[#D8A370]" /> {p.location}
                   </span>
                 </div>
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1C1A17] via-[#1C1A17]/30 to-transparent p-5 flex flex-col justify-end">
-                  <span className="text-[10px] font-semibold uppercase tracking-widest text-[#B5652E] mb-1 block">
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-[#D8A370] mb-1 block">
                     {p.spec}
                   </span>
                   <h3 className="font-serif text-2xl text-[#F5F1EA] mb-3 leading-tight">
@@ -170,7 +187,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ onOpenConsultation
                   </h3>
                   <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#F5F1EA] pt-2 border-t border-[#F5F1EA]/15">
                     <span>Explore 3D Specification</span>
-                    <ArrowUpRight className="w-4 h-4 text-[#B5652E]" />
+                    <ArrowUpRight className="w-4 h-4 text-[#D8A370]" />
                   </div>
                 </div>
               </div>

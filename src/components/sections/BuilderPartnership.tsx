@@ -54,14 +54,18 @@ export const BuilderPartnership: React.FC<BuilderPartnershipProps> = ({ onOpenCo
           {/* Fix 5: Portrait crop on mobile (aspect-[3/4]), auto height on desktop */}
           <div>
             <div className="rounded-xl overflow-hidden border border-[#F5F1EA]/15 shadow-2xl aspect-[3/4] sm:aspect-auto sm:h-[440px]">
-              <img
-                src="/images/portfolio_2_culinary.jpg"
-                alt="Architectural Outdoor Pavilion and Material Blueprint"
-                className="w-full h-full object-cover"
-                loading="lazy"
-                width="600"
-                height="440"
-              />
+              <picture>
+                <source srcSet="/images/portfolio_2_culinary-640.webp 640w, /images/portfolio_2_culinary-1024.webp 1024w" type="image/webp" sizes="(min-width: 768px) 520px, 92vw" />
+                <source srcSet="/images/portfolio_2_culinary-1024.jpg" type="image/jpeg" sizes="(min-width: 768px) 520px, 92vw" />
+                <img
+                  src="/images/portfolio_2_culinary-1024.jpg"
+                  alt="Architectural Outdoor Pavilion and Material Blueprint"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  width="1024"
+                  height="576"
+                />
+              </picture>
             </div>
           </div>
 

@@ -92,8 +92,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenConsultation }) => {
         <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center gap-3.5 group text-decoration-none focus-visible:ring-2 focus-visible:ring-[#B5652E] rounded p-1">
           <div className="w-11 h-11 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
             <img
-              src="/logo.png"
+              src="/logo.webp"
               alt="Southern Summit Logo Mark"
+              width="44"
+              height="44"
               className="w-full h-full object-contain"
             />
           </div>

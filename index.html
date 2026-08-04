@@ -16,6 +16,16 @@
          before the client-rendered React tree mounts (Fix 2). WebP variant is
          preloaded to match the format the <picture> element resolves to first. -->
     <link rel="preload" as="image" href="/images/hero_cad_blueprint-1376.webp" fetchpriority="high" type="image/webp" />
+
+    <!-- Critical hero fonts (Fix 1): preloaded so the LCP headline (Cormorant
+         Garamond roman + italic) and the body/button text (Plus Jakarta Sans)
+         are ready for first paint. These three variable/static woff2 files
+         replace 8 eagerly-loaded static weights (~235 KB -> ~87 KB) and cover
+         every weight actually used on the page. All other fonts load on demand
+         via font-display: swap. -->
+    <link rel="preload" as="font" href="/fonts/cormorant-garamond-variable.woff2" type="font/woff2" crossorigin />
+    <link rel="preload" as="font" href="/fonts/cormorant-garamond-italic-400.woff2" type="font/woff2" crossorigin />
+    <link rel="preload" as="font" href="/fonts/plus-jakarta-sans-variable.woff2" type="font/woff2" crossorigin />
   </head>
   <body>
     <div id="root"></div>

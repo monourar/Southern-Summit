@@ -6,7 +6,8 @@ export const CustomCursor: React.FC = () => {
 
   useEffect(() => {
     // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const prefersReducedMotion = reducedMotionQuery.matches;
     if (prefersReducedMotion) return;
 
     let mouseX = -100;
@@ -63,10 +64,32 @@ export const CustomCursor: React.FC = () => {
       animationFrameId = requestAnimationFrame(render);
     };
 
+    // Pause the loop while the tab is hidden; resume when it becomes visible again
+    const onVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animationFrameId);
+      } else if (!reducedMotionQuery.matches) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+
+    // Stop the loop if reduced motion is enabled mid-session; resume if disabled
+    const onReducedMotionChange = () => {
+      if (reducedMotionQuery.matches) {
+        cancelAnimationFrame(animationFrameId);
+      } else if (!document.hidden) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mousedown', onMouseDown);
     window.addEventListener('mouseup', onMouseUp);
     window.addEventListener('mouseover', onMouseOver);
+    document.addEventListener('visibilitychange', onVisibility);
+    reducedMotionQuery.addEventListener('change', onReducedMotionChange);
 
     animationFrameId = requestAnimationFrame(render);
 
@@ -75,6 +98,8 @@ export const CustomCursor: React.FC = () => {
       window.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mouseup', onMouseUp);
       window.removeEventListener('mouseover', onMouseOver);
+      document.removeEventListener('visibilitychange', onVisibility);
+      reducedMotionQuery.removeEventListener('change', onReducedMotionChange);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

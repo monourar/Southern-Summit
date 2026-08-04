@@ -58,4 +58,4 @@ Fully remote outdoor-living design that spans both sides of the build: the homeo
 
 ## Accessibility & Inclusion
 
-The codebase targets WCAG AA contrast (applied in prior work) and honors `prefers-reduced-motion` for the custom cursor; no formal product-specific accessibility standard has been confirmed by the owner beyond this.
+The product targets **WCAG AA** (owner-confirmed). The codebase applies AA contrast in prior work and honors `prefers-reduced-motion` for the custom cursor.

@@ -21,11 +21,10 @@ export const Testimonials: React.FC = () => {
       <div className="container mx-auto max-w-5xl">
         <div className="text-center mb-10 sm:mb-14">
           <span className="eyebrow eyebrow-light">Client Perspectives</span>
-          {/* Fix 2: Section headline keeps visual dominance on mobile */}
           <h2 className="section-title section-title-dark text-[2rem] sm:text-5xl">Voices of Transformation</h2>
         </div>
 
-        {/* Fix 6: On mobile, testimonials stack with generous gap and relaxed
+        {/* On mobile, testimonials stack with generous gap and relaxed
             serif text at text-xl (20px) — staying above body-copy size */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16">
           {testimonials.map((item, idx) => (

@@ -28,11 +28,10 @@ export const FAQSection: React.FC = () => {
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-10 sm:mb-14">
           <span className="eyebrow eyebrow-light">Clear Answers</span>
-          {/* Fix 2: Section headline keeps visual dominance on mobile */}
           <h2 className="section-title section-title-dark text-[2rem] sm:text-5xl">Frequently Asked Questions</h2>
         </div>
 
-        {/* Fix 6: Larger touch targets (py-5 on mobile), more generous answer
+        {/* Larger touch targets (py-5 on mobile), more generous answer
             spacing, and slightly larger question text on mobile */}
         <div className="border-t border-b border-[#1C1A17]/15 divide-y divide-[#1C1A17]/15">
           {faqs.map((faq, idx) => {
@@ -44,7 +43,7 @@ export const FAQSection: React.FC = () => {
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${idx}`}
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="w-full py-5 sm:py-7 text-left flex justify-between items-center gap-4 sm:gap-6 font-serif text-[1.125rem] sm:text-2xl text-[#1C1A17] hover:text-[#8F4D22] transition-colors focus-visible:ring-2 focus-visible:ring-[#B5652E] focus-visible:outline-none min-h-[52px]"
+                  className="w-full py-5 sm:py-7 text-left flex justify-between items-center gap-4 sm:gap-6 font-serif text-lg sm:text-2xl text-[#1C1A17] hover:text-[#8F4D22] transition-colors focus-visible:ring-2 focus-visible:ring-[#B5652E] focus-visible:outline-none min-h-[52px]"
                 >
                   <span className="leading-snug pr-2">{faq.q}</span>
                   <div className={`w-9 h-9 sm:w-8 sm:h-8 rounded-full border border-[#1C1A17]/20 flex items-center justify-center text-[#1C1A17] flex-shrink-0 transition-all duration-300 ${
@@ -59,7 +58,7 @@ export const FAQSection: React.FC = () => {
                     id={`faq-answer-${idx}`}
                     role="region"
                     aria-labelledby={`faq-btn-${idx}`}
-                    className="pb-6 sm:pb-8 text-[13px] sm:text-base text-[#666055] leading-relaxed font-light pr-4 sm:pr-12 pt-2 border-t border-[#1C1A17]/5"
+                    className="pb-6 sm:pb-8 text-sm sm:text-base text-[#666055] leading-relaxed font-light pr-4 sm:pr-12 pt-2 border-t border-[#1C1A17]/5"
                   >
                     {faq.a}
                   </div>

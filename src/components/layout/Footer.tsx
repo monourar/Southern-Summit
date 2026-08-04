@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
             {/* Social Media Link */}
             <div className="flex items-center gap-3">
               <a
-                href="https://www.facebook.com/profile.php?id=61576544911474#"
+                href="https://www.facebook.com/profile.php?id=61576544911474"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Visit Southern Summit Outdoor on Facebook"

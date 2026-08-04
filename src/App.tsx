@@ -10,7 +10,7 @@ import { BuilderPartnership } from './components/sections/BuilderPartnership';
 import { FAQSection } from './components/sections/FAQSection';
 import { CustomCursor } from './components/common/CustomCursor';
 
-// Fix 4 (unused JS): below-the-fold, interactivity-gated components are code-split
+// Below-the-fold, interactivity-gated components are code-split
 // so their JS only downloads when the user actually opens them. The estimator sits
 // mid-page and the modal renders null when closed, so neither needs to be in the
 // initial bundle.

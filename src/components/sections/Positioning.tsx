@@ -36,24 +36,24 @@ export const Positioning: React.FC = () => {
           {/* Left Column */}
           <div>
             <span className="eyebrow eyebrow-light">Architectural Studio Positioning</span>
-            {/* Fix 2: Section headline keeps visual dominance on mobile —
+            {/* Section headline keeps visual dominance on mobile —
                 text-[2rem] (32px) vs body 15-16px = ~2× ratio */}
             <h2 className="section-title section-title-dark text-[2rem] sm:text-5xl lg:text-6xl mb-5">
               We Don't Mow Lawns. <br />
               <span className="italic font-serif text-[#1C1A17]">We Architect Estates.</span>
             </h2>
 
-            <p className="text-[15px] sm:text-lg text-[#666055] leading-relaxed mb-6">
+            <p className="text-base sm:text-lg text-[#666055] leading-relaxed mb-6">
               Traditional landscaping companies sell inventory they happen to stock. Southern Summit operates as a virtual landscape architecture studio. We combine spatial 3D visualization, exact material engineering, and contractor-ready construction packages so you retain total control over your investment.
             </p>
           </div>
 
-          {/* Right Column: Fix 5 — Full-bleed edge-to-edge slider on mobile
+          {/* Right Column: Full-bleed edge-to-edge slider on mobile
               with taller portrait crop (aspect-[3/4]) */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] sm:text-xs uppercase tracking-widest text-[#666055] font-semibold">Transformation Proof</span>
-              <span className="text-[11px] text-[#666055] font-semibold flex items-center gap-1">
+              <span className="text-xs uppercase tracking-widest text-[#666055] font-semibold">Transformation Proof</span>
+              <span className="text-xs text-[#666055] font-semibold flex items-center gap-1">
                 <SlidersHorizontal className="w-3.5 h-3.5 text-[#1C1A17]" /> Drag to Compare
               </span>
             </div>
@@ -79,33 +79,33 @@ export const Positioning: React.FC = () => {
 
         {/* Trust Stats */}
         <div ref={statsSectionRef} className="pt-8 sm:pt-12 border-t border-[#1C1A17]/10">
-          {/* Fix 6: Stats stack vertically with generous spacing on mobile */}
+          {/* Stats stack vertically with generous spacing on mobile */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-12">
             <div className="border-l-2 border-[#1C1A17] pl-5">
-              <div className="font-serif text-[3.5rem] sm:text-7xl lg:text-8xl text-[#1C1A17] font-normal leading-none mb-2">
+              <div className="font-serif text-6xl sm:text-7xl lg:text-8xl text-[#1C1A17] font-normal leading-none mb-2">
                 {countPlans}+
               </div>
-              <div className="text-[11px] sm:text-xs uppercase tracking-widest text-[#1C1A17] font-bold mb-1">
+              <div className="text-xs uppercase tracking-widest text-[#1C1A17] font-bold mb-1">
                 Master Plans Designed
               </div>
               <p className="text-xs text-[#666055]">Turn-key CAD packages delivered</p>
             </div>
 
             <div className="border-l-2 border-[#1C1A17] pl-5">
-              <div className="font-serif text-[3.5rem] sm:text-7xl lg:text-8xl text-[#1C1A17] font-normal leading-none mb-2">
+              <div className="font-serif text-6xl sm:text-7xl lg:text-8xl text-[#1C1A17] font-normal leading-none mb-2">
                 {countPrecision}%
               </div>
-              <div className="text-[11px] sm:text-xs uppercase tracking-widest text-[#1C1A17] font-bold mb-1">
+              <div className="text-xs uppercase tracking-widest text-[#1C1A17] font-bold mb-1">
                 Remote Process Precision
               </div>
               <p className="text-xs text-[#666055]">Zero intrusive site visits required</p>
             </div>
 
             <div className="border-l-2 border-[#1C1A17] pl-5">
-              <div className="font-serif text-[3.5rem] sm:text-7xl lg:text-8xl text-[#1C1A17] font-normal leading-none mb-2">
+              <div className="font-serif text-6xl sm:text-7xl lg:text-8xl text-[#1C1A17] font-normal leading-none mb-2">
                 {countStates}
               </div>
-              <div className="text-[11px] sm:text-xs uppercase tracking-widest text-[#1C1A17] font-bold mb-1">
+              <div className="text-xs uppercase tracking-widest text-[#1C1A17] font-bold mb-1">
                 States Served Remotely
               </div>
               <p className="text-xs text-[#666055]">Nationwide contractor network support</p>

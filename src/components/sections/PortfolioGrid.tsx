@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { MapPin, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { MapPin, ArrowUpRight } from 'lucide-react';
 import { Reveal } from '../common/Reveal';
 
 interface PortfolioGridProps {
@@ -9,6 +9,12 @@ interface PortfolioGridProps {
 export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ onOpenConsultation }) => {
   const [filter, setFilter] = useState<'all' | 'pools' | 'kitchens' | 'master'>('all');
   const [activeSlide, setActiveSlide] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setActiveSlide(0);
+    carouselRef.current?.scrollTo({ left: 0 });
+  }, [filter]);
 
   const projects = [
     {
@@ -55,19 +61,17 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ onOpenConsultation
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-6">
           <div>
             <span className="eyebrow eyebrow-light">Selected Works</span>
-            {/* Fix 2: Section headline keeps visual dominance on mobile */}
             <h2 className="section-title section-title-dark text-[2rem] sm:text-5xl">Architectural Portfolio</h2>
           </div>
 
           {/* Category Filter Tabs — horizontal scroll on mobile */}
-          <div role="tablist" aria-label="Portfolio Category Filters" className="flex gap-3 sm:gap-6 overflow-x-auto scrollbar-none -mx-1 px-1 pb-2 border-b border-[#1C1A17]/15">
+          <div role="group" aria-label="Portfolio Category Filters" className="flex gap-3 sm:gap-6 overflow-x-auto scrollbar-none -mx-1 px-1 pb-2 border-b border-[#1C1A17]/15">
             {(['all', 'pools', 'kitchens', 'master'] as const).map((cat) => {
               const labels = { all: 'All Projects', pools: 'Custom Pools', kitchens: 'Outdoor Kitchens', master: 'Master Plans' };
               return (
                 <button
                   key={cat}
-                  role="tab"
-                  aria-selected={filter === cat}
+                  aria-pressed={filter === cat}
                   onClick={() => setFilter(cat)}
                   className={`min-h-[44px] px-3 py-2 text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] font-semibold transition-all relative whitespace-nowrap flex-shrink-0 ${
                     filter === cat
@@ -121,7 +125,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ onOpenConsultation
 
               <div className="absolute inset-0 bg-gradient-to-t from-[#1C1A17] via-[#1C1A17]/40 to-transparent p-8 flex flex-col justify-end transition-all duration-500">
                 <div className="transform group-hover:-translate-y-2 transition-transform duration-300">
-                  <span className="text-[11px] font-semibold uppercase tracking-widest text-[#D8A370] mb-1 block">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-[#D8A370] mb-1 block">
                     {p.spec}
                   </span>
                   <h3 className="font-serif text-3xl text-[#F5F1EA] mb-3 leading-tight">
@@ -137,10 +141,11 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ onOpenConsultation
           ))}
         </div>
 
-        {/* Mobile Carousel: Fix 5 — Larger cards with portrait crop (aspect-[3/4]),
+        {/* Mobile Carousel: Larger cards with portrait crop (aspect-[3/4]),
             full-bleed negative-margin carousel with generous card padding */}
         <div className="md:hidden">
           <div
+            ref={carouselRef}
             onScroll={(e) => {
               const el = e.currentTarget;
               const cardWidth = el.clientWidth * 0.88 + 16; // card width + gap
@@ -153,7 +158,16 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ onOpenConsultation
               <div
                 key={p.id}
                 onClick={onOpenConsultation}
-                className="w-[88vw] flex-shrink-0 snap-center relative aspect-[3/4] rounded-xl overflow-hidden border border-[#1C1A17]/15 shadow-xl cursor-pointer"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onOpenConsultation?.();
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                aria-label={`View ${p.title} architectural specification`}
+                className="w-[88vw] flex-shrink-0 snap-center relative aspect-[3/4] rounded-xl overflow-hidden border border-[#1C1A17]/15 shadow-xl cursor-pointer focus-visible:ring-2 focus-visible:ring-[#B5652E] focus-visible:outline-none"
               >
                 <picture>
                   <source srcSet={imageSrcSet(p.base)} type="image/webp" sizes={imageSizes} />

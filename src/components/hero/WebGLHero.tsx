@@ -33,9 +33,9 @@ export const WebGLHero: React.FC<WebGLHeroProps> = ({ onOpenConsultation }) => {
         </div>
 
         {/* Hero headline stays large and commanding on mobile.
-            text-[2.75rem] ≈ 44px — much larger than body text-base (16px).
+            text-5xl ≈ 48px — much larger than body text-base (16px).
             line-height loosened to 1.15 on mobile via CSS. */}
-        <h1 className="font-serif text-[2.75rem] sm:text-7xl lg:text-8xl text-[#F5F1EA] font-normal leading-[1.15] sm:leading-[1.08] tracking-tight mb-5 sm:mb-4">
+        <h1 className="font-serif text-5xl sm:text-7xl lg:text-8xl text-[#F5F1EA] font-normal leading-[1.15] sm:leading-[1.08] tracking-tight mb-5 sm:mb-4">
           We Engineer{' '}
           <br className="hidden sm:block" />
           <span className="italic">Extraordinary</span>
@@ -44,7 +44,7 @@ export const WebGLHero: React.FC<WebGLHeroProps> = ({ onOpenConsultation }) => {
         </h1>
 
         {/* Subhead — slightly smaller on mobile, tight to headline */}
-        <p className="text-[15px] sm:text-xl text-[#A39E93] max-w-2xl mx-auto font-light leading-relaxed mb-8 sm:mb-8">
+        <p className="text-base sm:text-xl text-[#A39E93] max-w-2xl mx-auto font-light leading-relaxed mb-8 sm:mb-8">
           Photorealistic 3D CAD master plans for luxury pools, outdoor culinary kitchens, and estate grounds — designed remotely and built by turn-key local contractors.
         </p>
 
@@ -60,13 +60,12 @@ export const WebGLHero: React.FC<WebGLHeroProps> = ({ onOpenConsultation }) => {
 
           {/* Toggle pills — collapsed to compact icon-only on mobile,
               full labels visible only on sm+ screens */}
-          <div role="tablist" aria-label="Hero View Mode" className="inline-flex items-center p-1 rounded-full bg-[#24211D]/80 border border-[#F5F1EA]/10 gap-1">
+          <div role="group" aria-label="Hero View Mode" className="inline-flex items-center p-1 rounded-full bg-[#24211D]/80 border border-[#F5F1EA]/10 gap-1">
             <button
-              role="tab"
-              aria-selected={activeTab === 'dissolve'}
+              aria-pressed={activeTab === 'dissolve'}
               aria-label="Blueprint Dissolve View"
               onClick={() => setActiveTab('dissolve')}
-              className={`min-h-[44px] px-3 sm:px-5 py-2 rounded-full text-[11px] uppercase tracking-widest font-medium transition-all duration-300 flex items-center justify-center gap-1.5 ${
+              className={`min-h-[44px] px-3 sm:px-5 py-2 rounded-full text-xs uppercase tracking-widest font-medium transition-all duration-300 flex items-center justify-center gap-1.5 ${
                 activeTab === 'dissolve'
                   ? 'bg-[#A05A28] text-[#F5F1EA] font-semibold shadow-md'
                   : 'text-[#A39E93] hover:text-[#F5F1EA]'
@@ -76,11 +75,10 @@ export const WebGLHero: React.FC<WebGLHeroProps> = ({ onOpenConsultation }) => {
               <span className="hidden sm:inline">Blueprint Dissolve</span>
             </button>
             <button
-              role="tab"
-              aria-selected={activeTab === 'photoreal'}
+              aria-pressed={activeTab === 'photoreal'}
               aria-label="Dusk Realization View"
               onClick={() => setActiveTab('photoreal')}
-              className={`min-h-[44px] px-3 sm:px-5 py-2 rounded-full text-[11px] uppercase tracking-widest font-medium transition-all duration-300 flex items-center justify-center gap-1.5 ${
+              className={`min-h-[44px] px-3 sm:px-5 py-2 rounded-full text-xs uppercase tracking-widest font-medium transition-all duration-300 flex items-center justify-center gap-1.5 ${
                 activeTab === 'photoreal'
                   ? 'bg-[#A05A28] text-[#F5F1EA] font-semibold shadow-md'
                   : 'text-[#A39E93] hover:text-[#F5F1EA]'

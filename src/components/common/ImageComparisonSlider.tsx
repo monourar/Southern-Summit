@@ -12,13 +12,13 @@ interface ImageComparisonSliderProps {
   /** Hide corner text labels on mobile (<640px) — keeps drag handle visible */
   hideLabelsOnMobile?: boolean;
   /** Optional base names of the optimized image variants in /images (e.g. "hero_cad_blueprint").
-      When provided, the slider renders <picture> with WebP srcset + resized JPEG fallback
-      instead of a single full-resolution image (Fix 1). */
+      When provided, the slider renders picture with WebP srcset + resized JPEG fallback
+      instead of a single full-resolution image. */
   beforeBase?: string;
   afterBase?: string;
-  /** Sizes hint passed to the <img>/<source> elements (Fix 2) */
+  /** Sizes hint passed to the img/source elements */
   sizes?: string;
-  /** LCP image hint — passed through to the before/after <img> (Fix 2) */
+  /** LCP image hint — passed through to the before/after img */
   beforeFetchPriority?: 'high' | 'low' | 'auto';
   beforeLoading?: 'eager' | 'lazy';
 }
@@ -94,7 +94,7 @@ export const ImageComparisonSlider: React.FC<ImageComparisonSliderProps> = ({
   // Label visibility class — hidden on mobile when hideLabelsOnMobile is set
   const labelHideClass = hideLabelsOnMobile ? 'hidden sm:block' : '';
 
-  // WCAG AA badge colors (Fix 5): the cyan accent keeps its cyan fill but gets
+  // WCAG AA badge colors: the cyan accent keeps its cyan fill but gets
   // near-black text (#1C1A17 on #38BDF8 = 8.10:1); the bronze accent gets the
   // accessible fill #A05A28 with light text (4.68:1) instead of #B5652E (3.83:1).
   const cyanAccent = accentColor === '#38BDF8';
@@ -209,7 +209,7 @@ export const ImageComparisonSlider: React.FC<ImageComparisonSliderProps> = ({
       />
 
       {/* Drag Handle — 48px on mobile (comfortable touch target), 44px on desktop.
-          Fix 3: This is the only interactive element that needs to remain visible
+          This is the only interactive element that needs to remain visible
           on mobile — labels are stripped, handle stays prominent. */}
       <div
         className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 sm:w-11 sm:h-11 rounded-full bg-white text-[#1C1A17] shadow-2xl border-2 flex items-center justify-center pointer-events-none z-40 transition-transform duration-200 ${

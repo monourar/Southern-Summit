@@ -35,9 +35,8 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onOpenConsulta
       <div className="container mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <span className="eyebrow">The 4-Stage Architectural Journey</span>
-          {/* Fix 2: Section headline stays commanding */}
           <h2 className="section-title text-[2rem] sm:text-5xl">From Vision to Turn-Key CAD Package</h2>
-          <p className="text-[15px] sm:text-base text-[#A39E93]">
+          <p className="text-base text-[#A39E93]">
             How we deliver a custom $200K+ outdoor sanctuary without a single intrusive home visit.
           </p>
         </div>
@@ -73,7 +72,7 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onOpenConsulta
         </div>
 
         {/* Mobile/Tablet: Vertical Timeline with oversized numerals
-            Fix 6: Numeral stays large (text-5xl ≈ 48px) as a strong visual anchor,
+            Numeral stays large (text-5xl ≈ 48px) as a strong visual anchor,
             even as card text scales down. gap-10 between cards for distinct steps. */}
         <div className="lg:hidden relative ml-8 sm:ml-10 pl-10 sm:pl-12 border-l-2 border-[#B5652E]/40 space-y-12 mb-12">
           <Reveal mode="scaleY" duration={0.8} className="absolute left-2 top-0 w-0.5 bg-[#B5652E]/40 origin-top" margin="-50px" />
@@ -90,7 +89,7 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onOpenConsulta
               {/* Timeline Node */}
               <Reveal mode="fade" duration={0.3} delay={idx * 0.08} className="absolute -left-4 top-6 w-3 h-3 rounded-full bg-[#B5652E]" />
 
-              {/* Fix 6: Oversized numeral as visual anchor */}
+              {/* Oversized numeral as visual anchor */}
               <span className="font-serif text-5xl text-[#B5652E]/10 font-normal leading-none tracking-tight block mb-1 pointer-events-none select-none">
                   {step.num}
                 </span>
@@ -98,7 +97,7 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onOpenConsulta
               <h3 className="font-serif text-xl sm:text-2xl text-[#F5F1EA] font-semibold mb-3">
                   {step.title}
                 </h3>
-                <p className="text-[13px] sm:text-sm text-[#A39E93] leading-7">
+                <p className="text-sm text-[#A39E93] leading-7">
                   {step.desc}
                 </p>
             </Reveal>

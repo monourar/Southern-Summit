@@ -8,6 +8,7 @@ interface ConsultationModalProps {
 
 export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, onClose }) => {
   const [submitted, setSubmitted] = useState(false);
+  const [mailtoFailed, setMailtoFailed] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,18 +31,69 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
-  // Focus modal container on open
+  // Reset the form on open; focus modal container and restore focus to the trigger on close
   useEffect(() => {
-    if (isOpen && modalRef.current) {
-      modalRef.current.focus();
-    }
+    if (!isOpen) return;
+    setSubmitted(false);
+    setMailtoFailed(false);
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      projectType: 'master-plan',
+      budget: '$75k-$150k',
+      notes: ''
+    });
+    const previousFocus = document.activeElement as HTMLElement | null;
+    modalRef.current?.focus();
+    return () => {
+      previousFocus?.focus?.();
+    };
   }, [isOpen]);
+
+  // Trap Tab navigation inside the modal while it is open
+  const handleTabTrap = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== 'Tab' || !modalRef.current) return;
+    const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
 
   if (!isOpen) return null;
 
+  const subject = encodeURIComponent(`New 3D Master Plan Request — ${formData.name}`);
+  const body = encodeURIComponent(
+    `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone || 'Not provided'}\nPrimary Focus: ${formData.projectType}\nEst. Build Budget: ${formData.budget}\n\nProject Notes:\n${formData.notes || 'Not provided'}`
+  );
+  const mailtoUrl = `mailto:southernsummitoutdoor@gmail.com?subject=${subject}&body=${body}`;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    window.open(mailtoUrl, '_self');
     setSubmitted(true);
+
+    // Heuristic: if the window never loses focus, assume no mail client handled it.
+    const timer = window.setTimeout(() => {
+      window.removeEventListener('blur', onBlur);
+      if (document.hasFocus()) {
+        setMailtoFailed(true);
+      }
+    }, 1200);
+    const onBlur = () => {
+      window.removeEventListener('blur', onBlur);
+      clearTimeout(timer);
+    };
+    window.addEventListener('blur', onBlur);
   };
 
   const handleResetAndClose = () => {
@@ -55,6 +107,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
       aria-modal="true"
       aria-labelledby="modal-title"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1C1A17]/85 backdrop-blur-md overflow-y-auto"
+      onKeyDown={handleTabTrap}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -80,12 +133,12 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
             </div>
 
             <div>
-              <span className="eyebrow">Proposal Confirmed</span>
+              <span className="eyebrow">Request Prepared</span>
               <h3 id="modal-title" className="font-serif text-3xl text-[#F5F1EA] mb-3">
-                3D Master Plan Request Received
+                Your 3D Master Plan Request Is Ready
               </h3>
               <p className="text-sm text-[#A39E93] max-w-md mx-auto leading-relaxed">
-                Thank you, <strong className="text-[#F5F1EA]">{formData.name}</strong>. Our senior spatial landscape architect is reviewing your estate specifications for <strong className="text-[#F5F1EA]">{formData.email}</strong>.
+                Thank you, <strong className="text-[#F5F1EA]">{formData.name}</strong>. Your email client has opened with the request pre-filled — press send and our senior spatial landscape architect will review your estate specifications.
               </p>
             </div>
 
@@ -100,14 +153,39 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
               </div>
             </div>
 
+            {mailtoFailed && (
+              <div className="p-4 rounded-xl bg-[#1C1A17] border border-[#B5652E]/40 text-left space-y-3 text-xs text-[#A39E93]">
+                <p className="text-[#F5F1EA] font-semibold">No email app opened automatically?</p>
+                <p>
+                  Send your request manually to {' '}
+                  <a
+                    href={mailtoUrl}
+                    className="text-[#D8A370] underline focus-visible:ring-2 focus-visible:ring-[#B5652E] rounded"
+                  >
+                    southernsummitoutdoor@gmail.com
+                  </a>
+                  .
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard?.writeText('southernsummitoutdoor@gmail.com');
+                  }}
+                  className="text-[#D8A370] underline focus-visible:ring-2 focus-visible:ring-[#B5652E] rounded"
+                >
+                  Copy the studio email instead
+                </button>
+              </div>
+            )}
+
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <button
-                onClick={handleResetAndClose}
+              <a
+                href={`mailto:southernsummitoutdoor@gmail.com?subject=${encodeURIComponent(`Priority Video Call Booking — ${formData.name}`)}`}
                 className="btn-primary flex-1 justify-center"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Book Priority Video Call</span>
-              </button>
+              </a>
               <button
                 onClick={handleResetAndClose}
                 className="btn-outline flex-1 justify-center"
@@ -175,7 +253,7 @@ export const ConsultationModal: React.FC<ConsultationModalProps> = ({ isOpen, on
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="input-[#projectType]" className="block text-xs uppercase tracking-wider text-[#A39E93] mb-1 font-medium">
+                  <label htmlFor="input-projectType" className="block text-xs uppercase tracking-wider text-[#A39E93] mb-1 font-medium">
                     Primary Focus
                   </label>
                   <select

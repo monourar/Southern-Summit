@@ -27,6 +27,8 @@ npm run dev        # http://localhost:5173
 | `npm run lint` | ESLint (flat config, warnings allowed) |
 | `npm run test` | Vitest (jsdom) — watch mode |
 | `npm run test:run` | Vitest (jsdom) — one-shot |
+| `npm run optimize:images` | Regenerate `public/images/` from raw photos in `images/` |
+| `npm run fetch:fonts` | Regenerate `public/fonts/*.woff2` from variable-font sources |
 
 ## Project layout
 
@@ -38,6 +40,18 @@ src/
 public/        images (optimized), fonts (woff2), logo, favicons
 scripts/       critical-css.mjs (build), optimize-images.mjs, fetch-fonts.mjs
 ```
+
+## Asset pipeline (only when assets change)
+
+- Images: place raw source photos in `images/` (untracked), then run
+  `npm run optimize:images` to regenerate `public/images/` (avif/webp/jpg at
+  the display widths the app uses). The committed `public/images/` variants
+  are what the app serves; `images/` is local build input only.
+- Fonts: `npm run fetch:fonts` regenerates `public/fonts/*.woff2` from the
+  variable-font sources. Re-run only when the brand faces update.
+- Critical CSS: never re-run manually — `npm run build` calls
+  `scripts/critical-css.mjs` automatically to inline above-the-fold CSS into
+  `dist/index.html`.
 
 ## Design system
 

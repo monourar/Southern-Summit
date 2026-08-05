@@ -238,6 +238,8 @@ site already exposes.
 
 - This spike intentionally does not choose a vendor; the implementation plan
   must convert §5 decisions into explicit acceptance criteria.
+- Follow-up: plan 013 designs the post-submission visitor contract so any backend intake work
+  inherited from this spike has a fixed interaction target, not just an archival RFC.
 - Plan 010 (builder portal) reuses the identity, storage, retention, and
   authorization decisions here rather than creating a second intake system.
 - Budget values remain illustrative (`PRODUCT.md:33`); never store or display

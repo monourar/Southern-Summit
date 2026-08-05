@@ -49,6 +49,10 @@ product intent and the real-vs-illustrative evidence rules.
   static mailto handoff).
 - Do not reintroduce the deleted `script.js`, `styles.css`, or raw `images/`
   originals (removed in plan 002).
+- Do not flag the `index.html` `@impeccable-live` start/end marker pair as a
+  defect. The live tooling inserts/removes it per session;
+  `.impeccable/live/config.json` is the contract. Flagging it on fresh audits
+  only re-runs plan 013's reconciliation cost.
 
 ## Plans index
 

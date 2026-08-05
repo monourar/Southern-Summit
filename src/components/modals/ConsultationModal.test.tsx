@@ -82,4 +82,38 @@ describe('ConsultationModal', () => {
     fireEvent.click(screen.getByRole('button', { name: /copy the studio email instead/i }));
     expect(clipboardWrite).toHaveBeenCalledWith('southernsummitoutdoor@gmail.com');
   });
+
+  it('traps Tab navigation inside the modal: Tab from last focusable wraps to first, Shift+Tab from first wraps to last', () => {
+    vi.stubGlobal('open', vi.fn().mockReturnValue(null));
+    const { container } = openModal();
+    const dialog = screen.getByRole('dialog');
+
+    const focusable = Array.from(
+      dialog.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((el) => el.getAttribute('tabindex') !== '-1');
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    expect(first).toBeDefined();
+    expect(last).toBeDefined();
+
+    // Tab from last → wraps to first
+    last.focus();
+    fireEvent.keyDown(container.firstChild as Element, { key: 'Tab' });
+    expect(document.activeElement).toBe(first);
+
+    // Shift+Tab from first → wraps to last
+    first.focus();
+    fireEvent.keyDown(container.firstChild as Element, { key: 'Tab', shiftKey: true });
+    expect(document.activeElement).toBe(last);
+  });
+
+  it('does not move focus when the modal is closed', () => {
+    vi.stubGlobal('open', vi.fn().mockReturnValue(null));
+    render(<ConsultationModal isOpen={false} onClose={onClose} />);
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    fireEvent.keyDown(document.body, { key: 'Tab' });
+    expect(document.activeElement).toBe(document.body);
+  });
 });

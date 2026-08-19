@@ -14,8 +14,11 @@
 
     <!-- LCP image: preloaded so the browser starts fetching it immediately,
          before the client-rendered React tree mounts (Fix 2). WebP variant is
-         preloaded to match the format the <picture> element resolves to first. -->
-    <link rel="preload" as="image" href="/images/hero_cad_blueprint-1376.webp" fetchpriority="high" type="image/webp" />
+         preloaded to match the format the <picture> element resolves to first.
+         Media-scoped: mobile slots (~390px) load the 512w render instead of
+         paying for the 124 KiB 1376w desktop render. -->
+    <link rel="preload" as="image" href="/images/hero_cad_blueprint-512.webp" fetchpriority="high" type="image/webp" media="(max-width: 767px)" />
+    <link rel="preload" as="image" href="/images/hero_cad_blueprint-1376.webp" fetchpriority="high" type="image/webp" media="(min-width: 768px)" />
 
     <!-- Critical hero fonts (Fix 1): preloaded so the LCP headline (Cormorant
          Garamond roman + italic) and the body/button text (Plus Jakarta Sans)
@@ -30,8 +33,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-  <!-- impeccable-live-start -->
-<script src="http://localhost:8400/live.js?token=a135e877-bde7-4fc5-8e82-88378339053c"></script>
-<!-- impeccable-live-end -->
-</body>
+  </body>
 </html>

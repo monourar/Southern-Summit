@@ -108,6 +108,9 @@ Pinned decisions a fresh advisor pass must not re-flag as open risk:
   defect to patch by editing `index.html`. The hook owns insert/removal between
   the start/end markers per session. Do not flag as runtime or a11y risk unless
   a live-tooling contract change decides otherwise. See `.impeccable/live/config.json`.
+  **Enforcement (2026-08-19): the pair is session-only — never commit it. A
+  committed copy ships `live.js` to prod, blocks render ~190–630 ms, and logs
+  `ERR_CONNECTION_FAILED` (PSI run 3). Strip it before committing.
 
 ## Findings considered and rejected
 

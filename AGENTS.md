@@ -50,9 +50,13 @@ product intent and the real-vs-illustrative evidence rules.
 - Do not reintroduce the deleted `script.js`, `styles.css`, or raw `images/`
   originals (removed in plan 002).
 - Do not flag the `index.html` `@impeccable-live` start/end marker pair as a
-  defect. The live tooling inserts/removes it per session;
+  defect. The live tooling inserts/removes it **per session**;
   `.impeccable/live/config.json` is the contract. Flagging it on fresh audits
-  only re-runs plan 013's reconciliation cost.
+  only re-runs plan 013's reconciliation cost. However, the pair is
+  **session-only**: a committed copy ships `live.js` to production where it
+  blocks render and logs `ERR_CONNECTION_FAILED` (measured 190–630 ms in PSI).
+  Strip the pair before committing; the tooling re-inserts it when a session
+  starts.
 
 ## Plans index
 

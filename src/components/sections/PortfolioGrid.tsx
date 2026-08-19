@@ -51,8 +51,13 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({ onOpenConsultation
 
   const filteredProjects = filter === 'all' ? projects : projects.filter(p => p.category === filter);
 
+  // Widths are per-project: portfolio_* renders at 640/1024, after_backyard at
+  // 512/768/1280 (matches scripts/optimize-images.mjs PHOTOS). Emitting widths
+  // the pipeline never generates would 404 every visit.
   const imageSrcSet = (name: string) =>
-    `/images/${name}-640.webp 640w, /images/${name}-1024.webp 1024w`;
+    name === 'after_backyard'
+      ? `/images/${name}-512.webp 512w, /images/${name}-768.webp 768w`
+      : `/images/${name}-640.webp 640w, /images/${name}-1024.webp 1024w`;
   const imageSizes = '(min-width: 768px) 425px, 88vw';
 
   return (

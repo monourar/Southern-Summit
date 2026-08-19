@@ -104,8 +104,8 @@ export const ImageComparisonSlider: React.FC<ImageComparisonSliderProps> = ({
   const srcSet = (base: string, widths: number[]) =>
     widths.map((w) => `/images/${base}-${w}.webp ${w}w`).join(', ');
   const fallback = (base: string, width: number) => `/images/${base}-${width}.jpg`;
-  const beforeWidths = beforeBase ? (beforeBase === 'before_backyard' ? [768, 1280] : [768, 1376]) : [];
-  const afterWidths = afterBase ? (afterBase === 'after_backyard' ? [768, 1280] : [768, 1376]) : [];
+  const beforeWidths = beforeBase ? (beforeBase === 'before_backyard' ? [512, 768, 1280] : [512, 768, 1376]) : [];
+  const afterWidths = afterBase ? (afterBase === 'after_backyard' ? [512, 768, 1280] : [512, 768, 1376]) : [];
   const beforeIntrinsic = beforeBase === 'before_backyard' ? { width: 1280, height: 714 } : { width: 1376, height: 768 };
   const afterIntrinsic = afterBase === 'after_backyard' ? { width: 1280, height: 714 } : { width: 1376, height: 768 };
 

@@ -20,12 +20,13 @@ const srcDir = join(root, 'images');
 const outDir = join(root, 'public', 'images');
 
 // name -> display config. Widths are 1x and 2x retina variants for the
-// largest layout breakpoint that uses each photo.
+// largest layout breakpoint that uses each photo. 512w covers the mobile
+// hero/compare slot (~390px viewport @ 1x, plus headroom for 2x DPR).
 const PHOTOS = [
-  { name: 'hero_cad_blueprint', widths: [768, 1376] },
-  { name: 'hero_backyard_night', widths: [768, 1376] },
-  { name: 'before_backyard', widths: [768, 1280] },
-  { name: 'after_backyard', widths: [768, 1280] },
+  { name: 'hero_cad_blueprint', widths: [512, 768, 1376] },
+  { name: 'hero_backyard_night', widths: [512, 768, 1376] },
+  { name: 'before_backyard', widths: [512, 768, 1280] },
+  { name: 'after_backyard', widths: [512, 768, 1280] },
   { name: 'portfolio_1_highland', widths: [640, 1024] },
   { name: 'portfolio_2_culinary', widths: [640, 1024] },
 ];
@@ -34,9 +35,14 @@ const PHOTOS = [
 // compression than default settings assume at web display sizes; a visual
 // spot-check at q72 showed no perceptible quality loss on these renders while
 // cutting ~30-40% off each WebP payload.
-const WEBP_QUALITY = 72;
-const AVIF_QUALITY = 48;
-const JPEG_QUALITY = 78;
+//
+// Fix 4 (PageSpeed run 3): q72 -> 64. PSI still estimated ~25-45% per-file
+// savings from more aggressive compression; a spot-check at q64 showed no
+// visible banding/artifacts on these dark-toned renders while the -768 hero
+// variants drop ~20-30 KiB each. AVIF/JPEG nudged down to match.
+const WEBP_QUALITY = 64;
+const AVIF_QUALITY = 44;
+const JPEG_QUALITY = 72;
 
 async function emit(pipeline, file) {
   await pipeline.toFile(file);
@@ -60,7 +66,7 @@ async function optimizePhoto(name, widths) {
 
 async function optimizeLogo() {
   // Fix 2: logo mark is displayed at 44px (w-11 h-11) in header + footer, with
-  // the favicon rendering at 16/32px. 144px covers 44px @ 3x retina (132px) and
+  // the favicon rendering at 16/32px. 96px covers 44px @ 2x retina (88px) and
   // the favicon with headroom. The original high-res source lives in
   // ./images/logo.png; the script emits the resized PNG + WebP into ./public.
   const src = join(srcDir, 'logo.png');
@@ -68,8 +74,8 @@ async function optimizeLogo() {
     console.warn('  SKIP logo: missing source (./images/logo.png)');
     return;
   }
-  const img = sharp(src).resize(144, 144, { fit: 'contain' });
-  await emit(img.clone().webp({ quality: 88 }), join(root, 'public', 'logo.webp'));
+  const img = sharp(src).resize(96, 96, { fit: 'contain' });
+  await emit(img.clone().webp({ quality: 80 }), join(root, 'public', 'logo.webp'));
   const png = await img.clone().png({ compressionLevel: 9, palette: true }).toBuffer();
   await writeFile(join(root, 'public', 'logo.png'), png);
   console.log(`  public/logo.png  ${(png.length / 1024).toFixed(1)} KiB`);

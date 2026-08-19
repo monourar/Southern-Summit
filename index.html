@@ -31,58 +31,7 @@
     <link rel="preload" as="font" href="/fonts/plus-jakarta-sans-variable.woff2" type="font/woff2" crossorigin />
   </head>
   <body>
-    <div id="root">
-      <!-- Static hero pre-render (LCP fast path): mirrors WebGLHero.tsx exactly
-           so React's mount replaces it without a visible swap. Text paints at
-           first parse instead of waiting for the JS bundle; the below-fold
-           sections enter after mount, so no CLS is introduced. Keep in sync
-           with src/components/hero/WebGLHero.tsx. -->
-      <section
-        id="hero-3d"
-        class="snap-section-auto bg-[#1C1A17] relative overflow-hidden pb-16 sm:pb-20"
-        style="padding-top: calc(var(--header-height, 80px) + 40px)"
-      >
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#B5652E]/10 rounded-full blur-[140px] pointer-events-none"></div>
-        <div class="container mx-auto relative z-10 text-center max-w-4xl mb-8 sm:mb-12">
-          <div class="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#24211D] border border-[#F5F1EA]/10 mb-6 backdrop-blur-md">
-            <span class="text-xs uppercase tracking-widest font-semibold text-[#A39E93]">
-              Virtual Landscape Architecture &amp; 3D Spatial Design
-            </span>
-          </div>
-          <h1 class="font-serif text-5xl sm:text-7xl lg:text-8xl text-[#F5F1EA] font-normal leading-[1.15] sm:leading-[1.08] tracking-tight mb-5 sm:mb-4">We Engineer <br class="hidden sm:block" /><span class="italic">Extraordinary</span><br class="sm:hidden" /> Outdoor Living</h1>
-          <p class="text-base sm:text-xl text-[#A39E93] max-w-2xl mx-auto font-light leading-relaxed mb-8 sm:mb-8">
-            Photorealistic 3D CAD master plans for luxury pools, outdoor culinary kitchens, and estate grounds &mdash; designed remotely and built by turn-key local contractors.
-          </p>
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 sm:mb-10">
-            <button class="btn-primary w-full sm:w-auto px-8 py-4 shadow-xl shadow-[#B5652E]/25">
-              <span>Start Your 3D Master Plan</span>
-              <svg class="lucide lucide-arrow-right w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-            </button>
-            <div role="group" aria-label="Hero View Mode" class="inline-flex items-center p-1 rounded-full bg-[#24211D]/80 border border-[#F5F1EA]/10 gap-1">
-              <button
-                aria-pressed="true"
-                aria-label="Blueprint Dissolve View"
-                class="min-h-[44px] px-3 sm:px-5 py-2 rounded-full text-xs uppercase tracking-widest font-medium transition-all duration-300 flex items-center justify-center gap-1.5 bg-[#A05A28] text-[#F5F1EA] font-semibold shadow-md"
-              >
-                <svg class="lucide lucide-sliders-horizontal w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"></line><line x1="10" x2="3" y1="4" y2="4"></line><line x1="21" x2="12" y1="12" y2="12"></line><line x1="8" x2="3" y1="12" y2="12"></line><line x1="21" x2="16" y1="20" y2="20"></line><line x1="12" x2="3" y1="20" y2="20"></line><line x1="14" x2="14" y1="2" y2="6"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="16" x2="16" y1="18" y2="22"></line></svg>
-                <span class="hidden sm:inline">Blueprint Dissolve</span>
-              </button>
-              <button
-                aria-pressed="false"
-                aria-label="Dusk Realization View"
-                class="min-h-[44px] px-3 sm:px-5 py-2 rounded-full text-xs uppercase tracking-widest font-medium transition-all duration-300 flex items-center justify-center gap-1.5 text-[#A39E93] hover:text-[#F5F1EA]"
-              >
-                <svg class="lucide lucide-layers w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"></path><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"></path><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"></path></svg>
-                <span class="hidden sm:inline">Dusk Realization</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="container mx-auto relative z-10">
-          <div class="relative w-full aspect-[3/4] sm:aspect-auto sm:h-[460px] md:h-[620px] lg:h-[680px] rounded-xl overflow-hidden border border-[#F5F1EA]/15 shadow-2xl"></div>
-        </div>
-      </section>
-    </div>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

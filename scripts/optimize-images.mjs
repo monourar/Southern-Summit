@@ -40,9 +40,14 @@ const PHOTOS = [
 // savings from more aggressive compression; a spot-check at q64 showed no
 // visible banding/artifacts on these dark-toned renders while the -768 hero
 // variants drop ~20-30 KiB each. AVIF/JPEG nudged down to match.
-const WEBP_QUALITY = 64;
-const AVIF_QUALITY = 44;
-const JPEG_QUALITY = 72;
+//
+// Fix 5 (PageSpeed run 4): q64 -> 58. PSI's image-delivery estimate (~116 KiB
+// across the -768 variants) still assumed ~q50-grade compression; q58 sits in
+// the middle — enough to capture most of the estimate while keeping the dusk
+// gradient banding invisible. AVIF/JPEG follow.
+const WEBP_QUALITY = 58;
+const AVIF_QUALITY = 40;
+const JPEG_QUALITY = 66;
 
 async function emit(pipeline, file) {
   await pipeline.toFile(file);

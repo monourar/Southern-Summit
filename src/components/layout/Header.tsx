@@ -11,39 +11,33 @@ export const Header: React.FC<HeaderProps> = ({ onOpenConsultation }) => {
   const headerRef = useRef<HTMLElement>(null);
 
   // Measure dynamic header height and update CSS custom property --header-height.
-  // The header height is tracked ONLY via ResizeObserver
-  // (padding changes when the scroll state flips also resize the header, so the
-  // observer catches them). No getBoundingClientRect() is read from the scroll
-  // handler, and the effect subscribes exactly once ([] deps) instead of
-  // re-subscribing on every isScrolled flip.
+  // The size is taken from the ResizeObserver entry itself (borderBoxSize),
+  // which the browser reports without forcing a synchronous layout read —
+  // no getBoundingClientRect() anywhere on the load/scroll path, so the
+  // post-mount forced reflow is gone. The observer's first callback reports
+  // the initial size, so no manual first measurement is needed, and it
+  // re-fires when the scroll-state padding change resizes the header.
   useEffect(() => {
-    const updateHeaderHeight = () => {
-      if (headerRef.current) {
-        const height = headerRef.current.getBoundingClientRect().height;
+    if (!headerRef.current) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      const height = entry.borderBoxSize[0]?.blockSize ?? entry.contentRect.height;
+      if (height) {
         document.documentElement.style.setProperty('--header-height', `${height}px`);
       }
-    };
-
-    updateHeaderHeight();
-
-    const resizeObserver = new ResizeObserver(() => {
-      updateHeaderHeight();
     });
 
-    if (headerRef.current) {
-      resizeObserver.observe(headerRef.current);
-    }
+    resizeObserver.observe(headerRef.current);
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 30);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', updateHeaderHeight);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', updateHeaderHeight);
       resizeObserver.disconnect();
     };
   }, []);
